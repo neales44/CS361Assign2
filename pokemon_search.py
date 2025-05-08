@@ -33,7 +33,7 @@ def search_by_type(poke_type, data):
 # Stat Guessing Game
 def stat_guessing_game(data):
     score = 0
-    print("\n🕹️  Stat Guessing Game!")
+    print("\n  Stat Guessing Game!")
     
     for round_num in range(1, 6):
         selected_pokemon = random.choice(data)
@@ -77,7 +77,7 @@ def stat_guessing_game(data):
 # Main Program
 def main():
     data = load_pokemon_data("pokePd.csv")
-    print("📘 Welcome to the Pokémon Terminal App!")
+    print(" Welcome to the Pokémon Terminal App!")
 
     while True:
         print("\nMain Menu:")
@@ -110,10 +110,11 @@ def main():
         elif choice == '2':
             stat_guessing_game(data)
         elif choice == '3':
-            print("👋 Goodbye!")
+            print(" Goodbye!")
             break
         else:
             print("Invalid input. Please enter 1, 2, or 3.")
 
 if __name__ == "__main__":
     main()
+

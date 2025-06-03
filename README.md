@@ -22,42 +22,32 @@ python3 -m venv venv
 source venv/bin/activate # On Windows use: venv\Scripts\activate
 pip install -r requirements.txt
 
-csharp
-Copy
-Edit
+
 If requirements.txt is missing, install manually:
 pip install flask requests
 
-shell
-Copy
-Edit
+
 
 ### 2. Start the Supporting Microservices
 
 #### Run name_service.py
 python name_service.py
 
-bash
-Copy
-Edit
+
 - Runs on: http://localhost:5001
 - Endpoint: /random_name
 
 #### Run type_service.py
 python type_service.py
 
-bash
-Copy
-Edit
+
 - Runs on: http://localhost:5003
 - Endpoint: /get_types/<pokemon_name>
 
 #### Optional: Run stat_game_service.py
 python stat_game_service.py
 
-bash
-Copy
-Edit
+
 - Runs on: http://localhost:5004
 - Endpoint: /get_stat_prompt
 - This is for a potential future stat-guessing game
@@ -65,9 +55,7 @@ Edit
 ### 3. Run the Main Clue Game Service
 python clue_game_service.py
 
-csharp
-Copy
-Edit
+
 - Runs on: http://localhost:5002
 - Endpoint: /random_clue_game_prompt
 - This service fetches a Pokémon name from name_service and its types from type_service, then returns a clue in JSON format like:
@@ -78,23 +66,17 @@ Edit
 "Answer": "Charizard"
 }
 
-bash
-Copy
-Edit
+
 
 ## Testing
 To test the clue game manually:
 python client.py
 
-arduino
-Copy
-Edit
+
 To run the automated unit test:
 python test_client_type_clue.py
 
-pgsql
-Copy
-Edit
+
 
 ## Example Flow
 1. clue_game_service.py calls name_service.py to get a random Pokémon name.
@@ -106,5 +88,3 @@ Edit
 - Flask
 - requests
 
-## Author
-Created for CS361 - Software Engineering I by https://github.com/neales44

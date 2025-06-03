@@ -1,39 +1,110 @@
-Pokémon Microservice – Type Clue Guessing Game
-1. How to REQUEST Data
-This microservice listens on http://localhost:5002/random_clue_game_prompt.
-It returns a JSON response with 3 clues to guess the name of a Pokémon.
+# CS361 Assignment 2: Pokémon Clue Game Microservice
+This project implements a Pokémon-themed microservice architecture where the main service generates a clue-based guessing game. Supporting services provide Pokémon names, types, and stat data, and communicate via RESTful HTTP APIs.
 
-Example (using Python and the requests library): python import requests
+## Repository Structure
+- clue_game_service.py: Main microservice that provides the clue-based game
+- name_service.py: Provides a random Pokémon name
+- type_service.py: Provides types for a given Pokémon
+- stat_game_service.py: Provides stats for a potential stat-guessing game
+- client.py: Sample client for the clue service
+- test_client_type_clue.py: Unit test for the clue service
+- data_loader.py: Loads and parses the Pokémon dataset
+- pokePd.csv: Dataset of Pokémon
+- requirements.txt: Python dependencies
 
-response = requests.get("http://localhost:5002/random_clue_game_prompt") data = response.json()
+## How to Run the Full Microservice Suite
+It's best to run each microservice in its own terminal window.
 
-print("First type clue:", data["FirstType"]) print("Second type clue:", data["SecondType"]) print("First letter of name:", data["FirstLetter"]) print("Correct answer (for testing):", data["CorrectAnswer"])
+### 1. Clone and Set Up the Project
+git clone https://github.com/neales44/CS361Assign2.git
+cd CS361Assign2
+python3 -m venv venv
+source venv/bin/activate # On Windows use: venv\Scripts\activate
+pip install -r requirements.txt
 
-You can use this data to prompt the user for guesses based on the type and name clues.
+csharp
+Copy
+Edit
+If requirements.txt is missing, install manually:
+pip install flask requests
 
-2. How to RECEIVE Data
-After calling the endpoint, the microservice responds with a JSON object containing:
+shell
+Copy
+Edit
 
-FirstType: The Pokémon's primary type.
-SecondType: The secondary type, or None if there isn't one.
-FirstLetter: The first letter of the Pokémon's name.
-CorrectAnswer: The actual name of the Pokémon (used to check guesses).
-Example response: json { "FirstType": "Water", "SecondType": "Flying", "FirstLetter": "G", "CorrectAnswer": "Gyarados" }
+### 2. Start the Supporting Microservices
 
-You can build a game interface by showing one clue at a time and checking the user’s guess after each.
+#### Run name_service.py
+python name_service.py
 
-Microservice Overview
-This Flask-based microservice serves type-based Pokémon guessing game prompts. It runs on port 5002 and returns randomized Pokémon clue data in JSON format.
+bash
+Copy
+Edit
+- Runs on: http://localhost:5001
+- Endpoint: /random_name
 
-Example Call
-python import requests
+#### Run type_service.py
+python type_service.py
 
-response = requests.get("http://localhost:5002/random_clue_game_prompt") data = response.json() print(data)
+bash
+Copy
+Edit
+- Runs on: http://localhost:5003
+- Endpoint: /get_types/<pokemon_name>
 
-Client Type Clue Game Microservice
-| |
-| GET /random_clue_game_prompt |
-|----------------------------->|
-| |
-| JSON Response |
-|<-----------------------------|
+#### Optional: Run stat_game_service.py
+python stat_game_service.py
+
+bash
+Copy
+Edit
+- Runs on: http://localhost:5004
+- Endpoint: /get_stat_prompt
+- This is for a potential future stat-guessing game
+
+### 3. Run the Main Clue Game Service
+python clue_game_service.py
+
+csharp
+Copy
+Edit
+- Runs on: http://localhost:5002
+- Endpoint: /random_clue_game_prompt
+- This service fetches a Pokémon name from name_service and its types from type_service, then returns a clue in JSON format like:
+{
+"FirstType": "Fire",
+"SecondType": "Flying",
+"FirstLetter": "C",
+"Answer": "Charizard"
+}
+
+bash
+Copy
+Edit
+
+## Testing
+To test the clue game manually:
+python client.py
+
+arduino
+Copy
+Edit
+To run the automated unit test:
+python test_client_type_clue.py
+
+pgsql
+Copy
+Edit
+
+## Example Flow
+1. clue_game_service.py calls name_service.py to get a random Pokémon name.
+2. It then calls type_service.py to retrieve the type(s) of that Pokémon.
+3. clue_game_service.py returns a JSON clue containing the first type, second type (or "None"), the first letter of the name, and the full answer.
+
+## Requirements
+- Python 3.7+
+- Flask
+- requests
+
+## Author
+Created for CS361 - Software Engineering I by https://github.com/neales44
